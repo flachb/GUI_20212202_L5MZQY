@@ -17,7 +17,7 @@ namespace VectorWars.Core.Elements.Bases
         public abstract int SellPrice { get; }
         public abstract Point Position { get; }
         public abstract Vector Rotation { get; }
-        public abstract float Size { get; }
+        public abstract float Radius { get; }
 
         public event Action<IMapElement> Destroyed;
 

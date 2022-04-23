@@ -7,7 +7,7 @@ namespace VectorWars.Core.Elements
     {
         Point Position { get; }
         Vector Rotation { get; }
-        float Size { get; }
+        float Radius { get; }
 
         event Action<IMapElement> Destroyed;
     }

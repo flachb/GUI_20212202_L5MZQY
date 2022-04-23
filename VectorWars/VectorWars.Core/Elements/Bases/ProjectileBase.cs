@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VectorWars.Core.Common;
 using VectorWars.Core.Elements.Types;
 using VectorWars.Core.Handlers;
@@ -17,7 +13,7 @@ namespace VectorWars.Core.Elements.Bases
         public abstract IMapElement Target { get; }
         public abstract Point Position { get; protected set; }
         public abstract Vector Rotation { get; protected set; }
-        public abstract float Size { get;}
+        public abstract float Radius { get;}
 
         public event Action<IMapElement> Destroyed;
 
@@ -35,12 +31,16 @@ namespace VectorWars.Core.Elements.Bases
 
             var movement = direction * Speed * (float)elapsed.TotalSeconds;
 
-            if (movement.Magnitude >= distance.Magnitude)
+            if (movement.Magnitude + Radius + Target.Radius >= distance.Magnitude)
             {
                 OnDestroyed();
                 var effect = CreateEffect();
+                _effectHandler.Add(effect);
 
+                return;
             }
+
+            Position += movement;
         }
 
         protected void OnDestroyed()
