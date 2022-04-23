@@ -6,6 +6,6 @@ namespace VectorWars.Core.Handlers
 {
     public interface IEnemyFinder
     {
-        IEnumerable<IEnemy> GetEnemies(Point point, float range);
+        IEnumerable<IEnemy> GetEnemies(Point position, float range);
     }
 }
