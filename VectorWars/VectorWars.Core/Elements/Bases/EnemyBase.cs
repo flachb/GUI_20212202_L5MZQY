@@ -19,38 +19,42 @@ namespace VectorWars.Core.Elements.Bases
         public abstract int Reward { get; }
         public abstract Point Position { get; protected set; }
         public abstract Vector Rotation { get; protected set; }
-        public abstract float Size { get; }
+        public abstract float Radius { get; }
 
         public event Action<IMapElement> Destroyed;
 
         public EnemyBase(Path path)
         {
             _path = path;
-            _pathTargetPoint = 1;
+            _pathTargetPoint = 0;
+            Position = _path[_pathTargetPoint];
         }
 
         public void Tick(TimeSpan elapsed)
         {
-            if(Position == _path[_pathTargetPoint])
+            if(Point.Distance(Position, _path[_pathTargetPoint]) <= Radius)
+            {
                 ++_pathTargetPoint;
+
+                if (_pathTargetPoint == _path.Count)
+                {
+                    OnDestroyed();
+                    return;
+                }
+            }
+
             Vector distance = _path[_pathTargetPoint] - Position;
             var direction = distance.Normalize();
             Rotation = direction;
 
             var movement = direction * Speed * (float)elapsed.TotalSeconds;
 
-            if(_path.Count == _pathTargetPoint)
-            {
-                OnDestroyed();
-                var effect = CreateEffect();
-            }
+            Position += movement;
         }
 
         protected void OnDestroyed()
         {
             Destroyed?.Invoke(this);
         }
-
-        protected abstract IEffect CreateEffect();
     }
 }

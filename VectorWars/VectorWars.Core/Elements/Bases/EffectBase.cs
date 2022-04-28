@@ -17,10 +17,10 @@ namespace VectorWars.Core.Elements.Bases
         public abstract TimeSpan Lifespan { get; }
         public abstract int Damage { get; }
         public abstract float SpeedModifier { get; }
-        public abstract float Range { get; } //-
-        public abstract Point Position { get; } //-
-        public abstract Vector Rotation { get; } //-
-        public abstract float Size { get; } //-
+        public abstract float Range { get; }
+        public abstract Point Position { get; }
+        public abstract Vector Rotation { get; }
+        public abstract float Radius { get; }
 
         public abstract event Action<IMapElement> Destroyed;
 
