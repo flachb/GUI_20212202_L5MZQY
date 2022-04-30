@@ -36,12 +36,6 @@ namespace VectorWars.Core.Elements.Bases
             if (_currentCooldown > TimeSpan.Zero)
                 return;
 
-            if (_currentLifespan < TimeSpan.Zero)
-            {
-                OnDestroyed();
-                return;
-            }
-
             var effectedEnemies = _enemyFinder.GetEnemies(Position, Radius);
             if (!effectedEnemies.Any())
                 return;
@@ -49,6 +43,12 @@ namespace VectorWars.Core.Elements.Bases
             foreach (var enemy in effectedEnemies)
             {
                 enemy.AddEffect(this);
+            }
+
+            if (_currentLifespan < TimeSpan.Zero)
+            {
+                OnDestroyed();
+                return;
             }
 
             _currentCooldown = Cooldown;
