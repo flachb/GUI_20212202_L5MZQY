@@ -8,7 +8,7 @@ using VectorWars.Core.Handlers.Bases;
 
 namespace VectorWars.Core.Handlers.Types
 {
-    public sealed class EffectHandler : HandlerBase<IEffect>
+    internal sealed class EffectHandler : HandlerBase<IEffect>
     {
     }
 }

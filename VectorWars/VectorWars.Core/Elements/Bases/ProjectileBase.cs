@@ -11,8 +11,8 @@ namespace VectorWars.Core.Elements.Bases
 
         public abstract float Speed { get; }
         public abstract IMapElement Target { get; }
-        public abstract Point Position { get; protected set; }
-        public abstract Vector Rotation { get; protected set; }
+        public Point Position { get; protected set; }
+        public Vector Rotation { get; protected set; }
         public abstract float Radius { get;}
 
         public event Action<IMapElement> Destroyed;

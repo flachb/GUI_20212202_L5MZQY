@@ -5,7 +5,7 @@ using VectorWars.Core.Elements;
 namespace VectorWars.Core.Handlers.Bases
 {
     public abstract class HandlerBase<TElement> : IHandler<TElement>
-        where TElement : IMapElement
+        where TElement : class, IMapElement
     {
         protected List<TElement> _elements;
 
@@ -13,7 +13,13 @@ namespace VectorWars.Core.Handlers.Bases
 
         public void Add(TElement element)
         {
+            element.Destroyed += OnElementDestroyed;
             _elements.Add(element);
+        }
+
+        private void OnElementDestroyed(IMapElement element)
+        {
+            _elements.Remove(element as TElement);
         }
 
         public void Tick(TimeSpan elapsed)

@@ -6,14 +6,4 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Resources\BlueEnemy.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Resources\BlueEnemy.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-
 </Project>

@@ -15,8 +15,8 @@ namespace VectorWars.Core.Elements.Bases
         public abstract float Range { get; }
         public abstract int BuyPrice { get; }
         public abstract int SellPrice { get; }
-        public abstract Point Position { get; }
-        public abstract Vector Rotation { get; }
+        public Point Position { get; }
+        public Vector Rotation { get; private set; }
         public abstract float Radius { get; }
 
         public event Action<IMapElement> Destroyed;
@@ -35,6 +35,11 @@ namespace VectorWars.Core.Elements.Bases
         public void Tick(TimeSpan elapsed)
         {
             _currentCooldown -= elapsed;
+
+            if (_currentTarget is not null)
+            {
+                Rotation = (_currentTarget.Position - Position).Normalize();
+            }
 
             if (_currentCooldown > TimeSpan.Zero)
                 return;
