@@ -10,6 +10,7 @@ namespace VectorWars.Core.Elements.Bases
         private readonly ICollection<IEffect> _appliedEffects;
         private readonly Path _path;
         private int _pathTargetPoint;
+        private float _originalSpeed;
 
         public abstract int Health { get; protected set; }
         public abstract float Speed { get; protected set; }
@@ -26,6 +27,8 @@ namespace VectorWars.Core.Elements.Bases
             _appliedEffects = new List<IEffect>();
             _path = path;
             _pathTargetPoint = 0;
+            _originalSpeed = Speed;
+
             Position = _path[_pathTargetPoint];
         }
 
@@ -47,6 +50,8 @@ namespace VectorWars.Core.Elements.Bases
                 }
             }
 
+            ApplyEffects();
+
             Vector distance = _path[_pathTargetPoint] - Position;
             var direction = distance.Normalize();
             Rotation = direction;
@@ -59,6 +64,17 @@ namespace VectorWars.Core.Elements.Bases
         protected void OnDestroyed()
         {
             Destroyed?.Invoke(this);
+        }
+
+        private void ApplyEffects()
+        {
+            Speed = _originalSpeed;
+
+            foreach (var effect in _appliedEffects)
+            {
+                Health -= effect.Damage;
+                Speed *= (1 - effect.SpeedModifier);
+            }
         }
     }
 }

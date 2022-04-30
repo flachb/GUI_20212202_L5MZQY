@@ -11,7 +11,5 @@ namespace VectorWars.Core.Elements.Types
         int Damage { get; }
 
         float SpeedModifier { get; }
-
-        float Range { get; }
     }
 }
