@@ -2,9 +2,9 @@
 {
     public interface IEnemy : IMapElement
     {
-        int Health { get; }
+        int Health { get; set; }
 
-        float Speed { get; }
+        float Speed { get; set; }
 
         int Damage { get; }
 
