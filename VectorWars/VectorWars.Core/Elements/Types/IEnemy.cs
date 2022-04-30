@@ -9,5 +9,7 @@
         int Damage { get; }
 
         int Reward { get; }
+
+        void AddEffect(IEffect effect);
     }
 }
