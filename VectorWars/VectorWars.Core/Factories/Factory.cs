@@ -16,7 +16,9 @@ namespace VectorWars.Core.Factories
         private readonly IHandler<IEffect> _effectHandler;
         private readonly IHandler<IProjectile> _projectileHandler;
 
-        private readonly Dictionary<(Type turretType, Type projectileType, Type effectType), ITurretFactory> _factoryCache;
+        private readonly Dictionary<(Type turretType, Type projectileType, Type effectType), ITurretFactory> _turretFactoryCache;
+        private readonly Dictionary<(Type projectileType, Type effectType), IProjectileFactory> _projectileFactoryCache;
+        private readonly Dictionary<Type, IEffectFactory> _effectFactoryCache;
 
         internal Factory(
             IEnemyFinder enemyFinder,
@@ -27,7 +29,9 @@ namespace VectorWars.Core.Factories
             _effectHandler = effectHandler;
             _projectileHandler = projectileHandler;
 
-            _factoryCache = new Dictionary<(Type turretType, Type projectileType, Type effectType), ITurretFactory>();
+            _turretFactoryCache = new Dictionary<(Type turretType, Type projectileType, Type effectType), ITurretFactory>();
+            _projectileFactoryCache = new Dictionary<(Type projectileType, Type effectType), IProjectileFactory>();
+            _effectFactoryCache = new Dictionary<Type, IEffectFactory>();
         }
 
         public ITurret CreateTurret<TTurret, TProjectile, TEffect>(Point position)
@@ -35,19 +39,34 @@ namespace VectorWars.Core.Factories
             where TProjectile : IProjectile
             where TEffect : IEffect
         {
-            var cacheKey = (typeof(TTurret), typeof(TProjectile), typeof(TEffect));
-
-            if (!_factoryCache.TryGetValue(cacheKey, out var factory))
+            var turretFactoryCacheKey = (typeof(TTurret), typeof(TProjectile), typeof(TEffect));
+            if (!_turretFactoryCache.TryGetValue(turretFactoryCacheKey, out var turretFactory))
             {
-                var effectFactory = CreateEffectFactory<TEffect>();
-                var projectileFactory = CreateProjectileFactory<TProjectile>(effectFactory);
-                var turretFactory = CreateTurretFactory<TTurret>(projectileFactory);
+                var projectileFactoryCacheKey = (typeof(TTurret), typeof(TProjectile));
+                if (!_projectileFactoryCache.TryGetValue(projectileFactoryCacheKey, out var projectileFactory))
+                {
+                    var effectFactoryCacheKey = typeof(TEffect);
+                    if (!_effectFactoryCache.TryGetValue(effectFactoryCacheKey, out var effectFactory))
+                    {
+                        var newEffectFactory = CreateEffectFactory<TEffect>();
+                        _effectFactoryCache.Add(effectFactoryCacheKey, newEffectFactory);
 
-                _factoryCache.Add(cacheKey, turretFactory);
-                factory = turretFactory;
+                        effectFactory = newEffectFactory;
+                    }
+
+                    var newProjectileFactory = CreateProjectileFactory<TProjectile>(effectFactory);
+                    _projectileFactoryCache.Add(projectileFactoryCacheKey, newProjectileFactory);
+
+                    projectileFactory = newProjectileFactory;
+                }
+
+                var newTurretFactory = CreateTurretFactory<TTurret>(projectileFactory);
+                _turretFactoryCache.Add(turretFactoryCacheKey, newTurretFactory);
+
+                turretFactory = newTurretFactory;
             }
 
-            return factory.Create(position);
+            return turretFactory.Create(position);
         }
 
         private IEffectFactory CreateEffectFactory<TEffect>()
