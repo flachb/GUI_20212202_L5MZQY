@@ -20,7 +20,7 @@ namespace VectorWars.Core.Elements.Bases
 
         public event Action<IMapElement> Destroyed;
 
-        private TimeSpan _currentCooldown;
+        private TimeSpan _currentCooldown = TimeSpan.Zero;
         private TimeSpan _currentLifespan;
 
         public EffectBase(IEnemyFinder enemyFinder)
