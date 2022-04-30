@@ -11,6 +11,8 @@ namespace VectorWars.Core
     {
         private const double ENEMY_REWARD_MODIFIER = 2.4;
         private const double TURRET_REWARD_MODIFIER = 0.8;
+        private const int START_HEALTH = 100;
+        private const int START_MONEY = 100;
 
         public string Name { get; }
         public int Health { get; private set; }
@@ -20,8 +22,8 @@ namespace VectorWars.Core
         public Player(string name)
         {
             Name = name;
-            Health = 100;
-            Money = 100;
+            Health = START_HEALTH;
+            Money = START_MONEY;
             Score = 0;
         }
 

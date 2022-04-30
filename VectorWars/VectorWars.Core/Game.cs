@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using VectorWars.Core.Elements;
 using VectorWars.Core.Elements.Types;
+using VectorWars.Core.Factories;
 using VectorWars.Core.Handlers.Types;
 
 namespace VectorWars.Core
@@ -16,9 +17,12 @@ namespace VectorWars.Core
         private readonly ProjectileHandler _projectileHandler;
         private readonly EffectHandler _effectHandler;
         private readonly EnemyHandler _enemyHandler;
+        private readonly Factory _turretFactory;
 
         private CancellationTokenSource _cancellationTokenSource;
         private Task _loopTask;
+
+        public Factory TurretFactory => _turretFactory;
 
         public event Action<IEnumerable<IMapElement>> Render;
         public event Action MapFinished;

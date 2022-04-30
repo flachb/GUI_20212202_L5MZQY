@@ -23,9 +23,11 @@ namespace VectorWars.Core.Elements.Bases
         private TimeSpan _currentCooldown = TimeSpan.Zero;
         private TimeSpan _currentLifespan;
 
-        public EffectBase(IEnemyFinder enemyFinder)
+        public EffectBase(IEnemyFinder enemyFinder, Point position)
         {
             _enemyFinder = enemyFinder;
+
+            Position = position;
         }
 
         public void Tick(TimeSpan elapsed)

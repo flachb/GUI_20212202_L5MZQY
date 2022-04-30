@@ -2,20 +2,22 @@
 using System.Linq;
 using VectorWars.Core.Common;
 using VectorWars.Core.Elements.Types;
+using VectorWars.Core.Factories.Types;
 using VectorWars.Core.Handlers;
 
 namespace VectorWars.Core.Elements.Bases
 {
-    internal abstract class TurretBase : ITurret
+    public abstract class TurretBase : ITurret
     {
         private readonly IEnemyFinder _enemyFinder;
         private readonly IHandler<IProjectile> _projectileHandler;
+        private readonly IProjectileFactory _projectileFactory;
 
         public abstract TimeSpan Cooldown { get; }
         public abstract float Range { get; }
         public abstract int BuyPrice { get; }
         public abstract int SellPrice { get; }
-        public Point Position { get; }
+        public Point Position { get; init; }
         public Vector Rotation { get; private set; }
         public abstract float Radius { get; }
 
@@ -26,10 +28,15 @@ namespace VectorWars.Core.Elements.Bases
 
         public TurretBase(
             IEnemyFinder enemyFinder,
-            IHandler<IProjectile> projectileHandler)
+            IHandler<IProjectile> projectileHandler,
+            IProjectileFactory projectileFactory,
+            Point position)
         {
             _enemyFinder = enemyFinder;
             _projectileHandler = projectileHandler;
+            _projectileFactory = projectileFactory;
+
+            Position = position;
         }
 
         public void Tick(TimeSpan elapsed)
@@ -55,7 +62,7 @@ namespace VectorWars.Core.Elements.Bases
                     .FirstOrDefault();
             }
 
-            var projectile = CreateProjectile(_currentTarget);
+            var projectile = _projectileFactory.Create(Position, _currentTarget);
             _projectileHandler.Add(projectile);
 
             _currentCooldown = Cooldown;
@@ -65,7 +72,5 @@ namespace VectorWars.Core.Elements.Bases
         {
             Destroyed?.Invoke(this);
         }
-
-        protected abstract IProjectile CreateProjectile(IMapElement target);
     }
 }
