@@ -6,13 +6,12 @@ using VectorWars.Core.Handlers;
 
 namespace VectorWars.Core.Elements.Bases
 {
-    internal abstract class TurretBase : ITurret
+    public abstract class TurretBase : ITurret
     {
         private readonly IEnemyFinder _enemyFinder;
         private readonly IHandler<IProjectile> _projectileHandler;
 
         public abstract TimeSpan Cooldown { get; }
-        public abstract float Range { get; }
         public abstract int BuyPrice { get; }
         public abstract int SellPrice { get; }
         public abstract Point Position { get; }
@@ -39,7 +38,7 @@ namespace VectorWars.Core.Elements.Bases
             if (_currentCooldown > TimeSpan.Zero)
                 return;
 
-            var enemiesInRange = _enemyFinder.GetEnemies(Position, Range);
+            var enemiesInRange = _enemyFinder.GetEnemies(Position, Radius);
             if (!enemiesInRange.Any())
                 return;
 

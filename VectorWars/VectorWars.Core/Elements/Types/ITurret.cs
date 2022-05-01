@@ -6,7 +6,7 @@ namespace VectorWars.Core.Elements.Types
     {
         TimeSpan Cooldown { get; }
 
-        float Range { get; }
+        float Radius { get; }
 
         int BuyPrice { get; }
 
