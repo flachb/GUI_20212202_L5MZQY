@@ -13,9 +13,9 @@ namespace VectorWars.Core.Elements.Effects
 
         public override int Damage => 0;
 
-        public override float SpeedModifier => 0.2f;
+        public override float SpeedModifier => 0.2f; //dummy
 
-        public override float Radius => 40f;
+        public override float Radius => 40f; //dummy
 
         public FreezerEffect(IEnemyFinder enemyFinder, Point position) : base(enemyFinder)
         {

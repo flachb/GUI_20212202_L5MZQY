@@ -11,11 +11,11 @@ namespace VectorWars.Core.Elements.Effects
 
         public override TimeSpan Lifespan => TimeSpan.Zero;
 
-        public override int Damage => 20;
+        public override int Damage => 20; //dummy
 
         public override float SpeedModifier => 0f;
 
-        public override float Radius => 40f;
+        public override float Radius => 40f; //dummy
 
         public RocketEffect(IEnemyFinder enemyFinder, Point position) : base(enemyFinder)
         {

@@ -8,7 +8,7 @@ using VectorWars.Core.Elements.Bases;
 
 namespace VectorWars.Core.Elements.Enemies
 {
-    public class Enemy_Emoji : EnemyBase //Green
+    public class Enemy_Emoji : EnemyBase //Green & dummy
     {
         public override int Health { get => Health; protected set => Health = 100; }
         public override float Speed { get => Speed; protected set => Speed = 1; }
