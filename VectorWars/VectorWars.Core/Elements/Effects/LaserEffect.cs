@@ -17,7 +17,7 @@ namespace VectorWars.Core.Elements.Effects
 
         public override float Radius => 1f;
 
-        public LaserEffects(IEnemyFinder enemyFinder, Point position) : base(enemyFinder, position)
+        public LaserEffects(IEnemyFinder enemyFinder, Point position) : base(enemyFinder)
         {
         }
     }

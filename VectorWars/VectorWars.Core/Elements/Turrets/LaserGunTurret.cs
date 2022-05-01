@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using VectorWars.Core.Common;
 using VectorWars.Core.Elements.Bases;
 using VectorWars.Core.Elements.Types;
+using VectorWars.Core.Factories.Types;
 using VectorWars.Core.Handlers;
 
 namespace VectorWars.Core.Elements.Turrets
@@ -18,20 +19,10 @@ namespace VectorWars.Core.Elements.Turrets
 
         public override int SellPrice => 70;
 
-        public override Point Position => Position;
-
-        public override Vector Rotation => Rotation;
-
         public override float Radius => 80f;
 
-        protected override IProjectile CreateProjectile(IMapElement target)
+        public LaserGunTurret(IEnemyFinder enemyFinder, IHandler<IProjectile> projectileHandler, IProjectileFactory projectileFactory, Point position) : base(enemyFinder, projectileHandler, projectileFactory, position)
         {
-            throw new NotImplementedException();
-        }
-
-        public LaserGunTurret(IEnemyFinder enemyFinder, IHandler<IProjectile> projectileHandler) : base(enemyFinder, projectileHandler)
-        {
-
         }
     }
 }

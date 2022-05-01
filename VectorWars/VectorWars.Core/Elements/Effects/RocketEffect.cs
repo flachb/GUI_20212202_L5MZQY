@@ -17,7 +17,7 @@ namespace VectorWars.Core.Elements.Effects
 
         public override float Radius => 40f;
 
-        public RocketEffect(IEnemyFinder enemyFinder, Point position) : base(enemyFinder, position)
+        public RocketEffect(IEnemyFinder enemyFinder, Point position) : base(enemyFinder)
         {
         }
     }
