@@ -16,9 +16,9 @@ namespace VectorWars.Core.Elements.Bases
         public abstract float Speed { get; protected set; }
         public abstract int Damage { get; protected set; }
         public abstract int Reward { get; }
-        public abstract Point Position { get; protected set; }
-        public abstract Vector Rotation { get; protected set; }
         public abstract float Radius { get; }
+        public Point Position { get; private set; }
+        public Vector Rotation { get; private set; }
 
         public event Action<IMapElement> Destroyed;
 
@@ -52,6 +52,12 @@ namespace VectorWars.Core.Elements.Bases
 
             ApplyEffects();
 
+            if (Health <= 0)
+            {
+                OnDestroyed();
+                return;
+            }
+
             Vector distance = _path[_pathTargetPoint] - Position;
             var direction = distance.Normalize();
             Rotation = direction;
@@ -75,6 +81,8 @@ namespace VectorWars.Core.Elements.Bases
                 Health -= effect.Damage;
                 Speed *= (1 - effect.SpeedModifier);
             }
+
+            _appliedEffects.Clear();
         }
     }
 }

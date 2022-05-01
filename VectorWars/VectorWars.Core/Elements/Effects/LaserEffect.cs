@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using VectorWars.Core.Common;
 using VectorWars.Core.Elements.Bases;
 using VectorWars.Core.Handlers;
 
@@ -19,9 +16,9 @@ namespace VectorWars.Core.Elements.Effects
         public override float SpeedModifier => 0f;
 
         public override float Radius => 1f;
-        public LaserEffects(IEnemyFinder enemyFinder) : base(enemyFinder)
+
+        public LaserEffects(IEnemyFinder enemyFinder, Point position) : base(enemyFinder, position)
         {
         }
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using VectorWars.Core.Common;
 using VectorWars.Core.Elements.Types;
+using VectorWars.Core.Factories.Types;
 using VectorWars.Core.Handlers;
 
 namespace VectorWars.Core.Elements.Bases
@@ -8,19 +9,27 @@ namespace VectorWars.Core.Elements.Bases
     public abstract class ProjectileBase : IProjectile
     {
         private readonly IHandler<IEffect> _effectHandler;
+        private readonly IEffectFactory _effectFactory;
 
         public abstract float Speed { get; }
-        public abstract IMapElement Target { get; }
-        public abstract Point Position { get; protected set; }
-        public abstract Vector Rotation { get; protected set; }
-        public abstract float Radius { get;}
+        public IMapElement Target { get; }
+        public Point Position { get; private set; }
+        public Vector Rotation { get; private set; }
+        public abstract float Radius { get; }
 
         public event Action<IMapElement> Destroyed;
 
         public ProjectileBase(
-            IHandler<IEffect> effectHandler)
+            IHandler<IEffect> effectHandler,
+            IEffectFactory effectFactory,
+            Point position,
+            IMapElement target)
         {
             _effectHandler = effectHandler;
+            _effectFactory = effectFactory;
+
+            Position = position;
+            Target = target;
         }
 
         public void Tick(TimeSpan elapsed)
@@ -34,7 +43,7 @@ namespace VectorWars.Core.Elements.Bases
             if (movement.Magnitude + Radius + Target.Radius >= distance.Magnitude)
             {
                 OnDestroyed();
-                var effect = CreateEffect();
+                var effect = _effectFactory.Create(Target.Position);
                 _effectHandler.Add(effect);
 
                 return;
@@ -47,7 +56,5 @@ namespace VectorWars.Core.Elements.Bases
         {
             Destroyed?.Invoke(this);
         }
-
-        protected abstract IEffect CreateEffect();
     }
 }

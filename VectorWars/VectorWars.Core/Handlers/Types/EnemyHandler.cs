@@ -5,7 +5,7 @@ using VectorWars.Core.Handlers.Bases;
 
 namespace VectorWars.Core.Handlers.Types
 {
-    public sealed class EnemyHandler : HandlerBase<IEnemy>, IEnemyFinder
+    internal sealed class EnemyHandler : HandlerBase<IEnemy>, IEnemyFinder
     {
         public IEnumerable<IEnemy> GetEnemies(Point position, float range)
         {

@@ -3,7 +3,11 @@ using VectorWars.Core.Handlers.Bases;
 
 namespace VectorWars.Core.Handlers.Types
 {
-    public sealed class TurretHandler : HandlerBase<ITurret>
+    internal sealed class TurretHandler : HandlerBase<ITurret>
     {
+        public void Remove(ITurret turret)
+        {
+            _elements.Remove(turret);
+        }
     }
 }

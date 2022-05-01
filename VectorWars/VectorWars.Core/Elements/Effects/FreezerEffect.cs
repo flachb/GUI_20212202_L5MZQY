@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using VectorWars.Core.Common;
 using VectorWars.Core.Elements.Bases;
 using VectorWars.Core.Handlers;
 
@@ -20,9 +17,8 @@ namespace VectorWars.Core.Elements.Effects
 
         public override float Radius => 40f;
 
-        public FreezerEffect(IEnemyFinder enemyFinder) : base(enemyFinder)
+        public FreezerEffect(IEnemyFinder enemyFinder, Point position) : base(enemyFinder, position)
         {
-
         }
     }
 }

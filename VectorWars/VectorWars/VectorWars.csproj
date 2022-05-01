@@ -7,13 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\BlueEnemy.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Resources\BlueEnemy.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <ProjectReference Include="..\VectorWars.Core\VectorWars.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

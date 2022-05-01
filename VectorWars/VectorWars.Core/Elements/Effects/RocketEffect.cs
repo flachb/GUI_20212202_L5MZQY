@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using VectorWars.Core.Common;
 using VectorWars.Core.Elements.Bases;
 using VectorWars.Core.Handlers;
 
@@ -20,7 +17,7 @@ namespace VectorWars.Core.Elements.Effects
 
         public override float Radius => 40f;
 
-        public RocketEffect(IEnemyFinder enemyFinder) : base(enemyFinder)
+        public RocketEffect(IEnemyFinder enemyFinder, Point position) : base(enemyFinder, position)
         {
         }
     }
