@@ -7,6 +7,10 @@ namespace VectorWars.Core.Elements.Effects
 {
     public class RocketEffect : EffectBase
     {
+        public RocketEffect(IEnemyFinder enemyFinder, Point position) : base(enemyFinder, position)
+        {
+        }
+
         public override TimeSpan Cooldown => TimeSpan.Zero;
 
         public override TimeSpan Lifespan => TimeSpan.Zero;
@@ -17,8 +21,5 @@ namespace VectorWars.Core.Elements.Effects
 
         public override float Radius => 40f; //dummy
 
-        public RocketEffect(IEnemyFinder enemyFinder, Point position) : base(enemyFinder)
-        {
-        }
     }
 }

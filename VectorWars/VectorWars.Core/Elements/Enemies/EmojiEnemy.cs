@@ -8,7 +8,7 @@ using VectorWars.Core.Elements.Bases;
 
 namespace VectorWars.Core.Elements.Enemies
 {
-    public class Enemy_Emoji : EnemyBase //Green & dummy
+    public class EmojiEnemy : EnemyBase //Green & dummy
     {
         public override int Health { get => Health; protected set => Health = 100; }
         public override float Speed { get => Speed; protected set => Speed = 1; }
@@ -16,12 +16,9 @@ namespace VectorWars.Core.Elements.Enemies
 
         public override int Reward => 50;
 
-        public override Point Position { get => Position; protected set => Position = value; }
-        public override Vector Rotation { get => Rotation; protected set => Rotation = value; }
-
         public override float Radius => 10f;
 
-        public Enemy_Emoji(Path path) : base(path)
+        public EmojiEnemy(Path path) : base(path)
         {
         }
     }
