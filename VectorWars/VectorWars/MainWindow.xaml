@@ -5,7 +5,82 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VectorWars"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="1200" ResizeMode="NoResize">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="Black" BorderThickness="2">
+            <Label Grid.Column="0" Background="BlueViolet"/>
+        </Border>
+        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2">
+            <StackPanel Grid.Column="1">
+                <Label Margin="0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Background="AliceBlue">Informations</Label>
+                <Grid Margin="0" Background="AliceBlue">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="0,2,0,0"/>
+                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="0,1,0,0"/>
+                    <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,1,0,2"/>
+                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,2,0,0"/>
+                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,1,0,0"/>
+                    <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,1,0,2"/>
+                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource InfoNameFontStyle}">Score</Label>
+                    <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource InfoNameFontStyle}">Money</Label>
+                    <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource InfoNameFontStyle}">Health</Label>
+                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="LightSeaGreen">1234</Label>
+                    <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="Gold">1234</Label>
+                    <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="Pink">1234</Label>
+                </Grid>
+                <Label Margin="0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Background="PaleGreen">Turrets</Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="0,2,0,0"/>
+                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="0,1,0,2"/>
+                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,2,1,0"/>
+                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,1,1,2"/>
+                    <Label Grid.Row="0" Grid.Column="0">MachineGunTurretPicture</Label>
+                    <Label Grid.Row="0" Grid.Column="1">LaserGunTurretPicture</Label>
+                    <Label Grid.Row="1" Grid.Column="0">RocketLauncherTurretPicture</Label>
+                    <Label Grid.Row="1" Grid.Column="1">FreezerGunTurretPicture</Label>
+                </Grid>
+                <Label Margin="0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Background="HotPink">Enemies</Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="0,2,0,0"/>
+                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="0,1,0,2"/>
+                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,2,1,0"/>
+                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,1,1,2"/>
+                    <Label Grid.Row="0" Grid.Column="0">EmojiEnemyPicture</Label>
+                    <Label Grid.Row="0" Grid.Column="1">SkullEnemyPicture</Label>
+                    <Label Grid.Row="1" Grid.Column="0">RabbitEnemyPicture</Label>
+                    <Label Grid.Row="1" Grid.Column="1">ManEnemyPicture</Label>
+                </Grid>
+                <Button Margin="12" Padding="10,10,10,10" FontSize="20">Pause</Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
+
