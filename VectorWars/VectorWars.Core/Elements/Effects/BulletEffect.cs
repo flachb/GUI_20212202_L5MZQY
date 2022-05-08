@@ -7,6 +7,10 @@ namespace VectorWars.Core.Elements.Effects
 {
     public class BulletEffect : EffectBase
     {
+        public BulletEffect(IEnemyFinder enemyFinder, Point position) : base(enemyFinder, position)
+        {
+        }
+
         public override TimeSpan Cooldown => TimeSpan.Zero;
 
         public override TimeSpan Lifespan => TimeSpan.Zero;
@@ -16,9 +20,5 @@ namespace VectorWars.Core.Elements.Effects
         public override float SpeedModifier => 0f;
 
         public override float Radius => 1f; //dummy
-
-        public BulletEffect(IEnemyFinder enemyFinder, Point position) : base(enemyFinder)
-        {
-        }
     }
 }

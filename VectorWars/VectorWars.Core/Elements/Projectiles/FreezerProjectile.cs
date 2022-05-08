@@ -6,28 +6,20 @@ using System.Threading.Tasks;
 using VectorWars.Core.Common;
 using VectorWars.Core.Elements.Bases;
 using VectorWars.Core.Elements.Types;
+using VectorWars.Core.Factories.Types;
 using VectorWars.Core.Handlers;
 
 namespace VectorWars.Core.Elements.Projectiles
 {
     public class FreezerProjectile : ProjectileBase
     {
+        public FreezerProjectile(IHandler<IEffect> effectHandler, IEffectFactory effectFactory, Point position, IMapElement target) : base(effectHandler, effectFactory, position, target)
+        {
+        }
+
         public override float Speed => 60f; //dummy
 
-        public override IMapElement Target => throw new NotImplementedException();
+        public override float Radius => 5f;
 
-        public override Point Position { get => Position; protected set => Position = value; }
-        public override Vector Rotation { get => Rotation; protected set => Rotation = value; }
-
-        public override float Radius => throw new NotImplementedException();
-
-        protected override IEffect CreateEffect()
-        {
-            throw new NotImplementedException();
-        }
-
-        public FreezerProjectile(IHandler<IEffect> effectHandler) : base(effectHandler)
-        {
-        }
     }
 }
