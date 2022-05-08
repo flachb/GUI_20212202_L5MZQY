@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using VectorWars.Core.Common;
 using VectorWars.Core.Elements;
 using VectorWars.Core.Elements.Types;
 using VectorWars.Core.Factories;
@@ -22,8 +23,6 @@ namespace VectorWars.Core
         private CancellationTokenSource _cancellationTokenSource;
         private Task _loopTask;
 
-        public Factory TurretFactory => _turretFactory;
-
         public event Action<IEnumerable<IMapElement>> Render;
         public event Action MapFinished;
 
@@ -36,6 +35,8 @@ namespace VectorWars.Core
             _projectileHandler = new ProjectileHandler();
             _effectHandler = new EffectHandler();
             _enemyHandler = new EnemyHandler();
+
+            _turretFactory = new Factory(_enemyHandler, _effectHandler, _projectileHandler);
 
             _map.EnemyReachedFinish += OnEnemyReachedFinish;
             _map.EnemyKilled += OnEnemyKilled;
@@ -61,14 +62,29 @@ namespace VectorWars.Core
             }
         }
 
-        public void AddTurret(ITurret turret)
+        public void AddTurret<TTurret, TProjectile, TEffect>(GridElement gridElement)
+            where TTurret : ITurret
+            where TProjectile : IProjectile
+            where TEffect : IEffect
         {
+            if (gridElement.OccupiedBy != null)
+                return;
+
+            var turret = _turretFactory.CreateTurret<TTurret, TProjectile, TEffect>(gridElement.Center);
+
+            gridElement.OccupiedBy = turret;
+
             _turretHandler.Add(turret);
             _player.BoughtTurret(turret);
         }
 
-        public void RemoveTurret(ITurret turret)
+        public void RemoveTurret(GridElement gridElement)
         {
+            var mapElement = gridElement.OccupiedBy;
+
+            if (mapElement == null || mapElement is not ITurret turret)
+                return;
+
             _turretHandler.Remove(turret);
             _player.SoldTurret(turret);
         }
