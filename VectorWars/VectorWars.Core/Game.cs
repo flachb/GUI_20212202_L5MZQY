@@ -11,8 +11,8 @@ namespace VectorWars.Core
 {
     public class Game
     {
-        private readonly Map _map;
-        private readonly Player _player;
+        public readonly Map _map;
+        public readonly Player _player;
         private readonly TurretHandler _turretHandler;
         private readonly ProjectileHandler _projectileHandler;
         private readonly EffectHandler _effectHandler;
@@ -94,7 +94,7 @@ namespace VectorWars.Core
             });
         }
 
-        private IEnumerable<IMapElement> GetMapElements()
+        public IEnumerable<IMapElement> GetMapElements()
         {
             foreach (var mapElement in _turretHandler.Elements)
                 yield return mapElement;
