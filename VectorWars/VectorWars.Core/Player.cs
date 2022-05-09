@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using VectorWars.Core.Elements.Types;
 
 namespace VectorWars.Core
 {
-    public class Player
+    public class Player : INotifyPropertyChanged
     {
         private const double ENEMY_REWARD_MODIFIER = 2.4;
         private const double TURRET_REWARD_MODIFIER = 0.8;
@@ -15,9 +12,41 @@ namespace VectorWars.Core
         private const int START_MONEY = 100;
 
         public string Name { get; }
-        public int Health { get; private set; }
-        public int Money { get; private set; }
-        public double Score { get; private set; }
+
+        private int _health;
+        public int Health
+        {
+            get => _health;
+            private set
+            {
+                _health = value;
+                OnNotifyPropertyChanged();
+            }
+        }
+
+        private int _money;
+        public int Money
+        {
+            get => _money;
+            private set
+            {
+                _money = value;
+                OnNotifyPropertyChanged();
+            }
+        }
+
+        private double _score;
+        public double Score
+        {
+            get => _score;
+            private set
+            {
+                _score = value;
+                OnNotifyPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public Player(string name)
         {
@@ -47,6 +76,11 @@ namespace VectorWars.Core
         public void SoldTurret(ITurret turret)
         {
             Money += turret.SellPrice;
+        }
+
+        private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

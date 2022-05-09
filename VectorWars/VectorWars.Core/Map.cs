@@ -42,7 +42,7 @@ namespace VectorWars.Core
 
             var currentWave = Waves[_currentWaveCounter];
 
-            foreach ((TimeSpan spawnTime, IEnemy enemy)  in currentWave)
+            foreach ((TimeSpan spawnTime, IEnemy enemy) in currentWave)
             {
                 if (spawnTime <= _previousElapsed)
                 { 

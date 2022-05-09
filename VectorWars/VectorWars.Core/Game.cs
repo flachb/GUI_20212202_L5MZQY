@@ -23,6 +23,9 @@ namespace VectorWars.Core
         private CancellationTokenSource _cancellationTokenSource;
         private Task _loopTask;
 
+        public Map Map => _map;
+        public Player Player => _player;
+
         public event Action<IEnumerable<IMapElement>> Render;
         public event Action MapFinished;
 
