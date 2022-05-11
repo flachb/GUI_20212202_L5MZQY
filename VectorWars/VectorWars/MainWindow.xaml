@@ -4,9 +4,213 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VectorWars"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        mc:Ignorable="d" x:Name="window"
+        Title="VectorWars TD" Height="800" Width="1305" ResizeMode="NoResize" Loaded="Window_Loaded" KeyDown="Window_KeyDown" MouseMove="Window_MouseMove">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Panel.ZIndex="2" Visibility="{Binding IsMenuVisible, FallbackValue=Collapsed}">
+            <StackPanel Width="200" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="{Binding StartGameButtonContent}" Command="{Binding StartGameCommand}" Height="50" FontSize="20" Margin="10"/>
+                <CheckBox Content="Hard mode" IsChecked="{Binding HardModeChecked}" Visibility="{Binding IsHardModeVisible}" Margin="10, 0, 10, 10" HorizontalAlignment="Center"/>
+                <!--<Button Content="High scores" Command="{Binding HighScoresCommand}" Height="50" FontSize="20" Margin="10"/>-->
+                <Button Content="Exit" Command="{Binding ExitCommand}" Height="50" FontSize="20" Margin="10"/>
+            </StackPanel>
+        </Border>
+        <Border Background="White" Panel.ZIndex="1"
+                Visibility="{Binding IsMenuVisible, FallbackValue=Collapsed}">
+            <Border Opacity="0.75" >
+                <Border.Effect>
+                    <BlurEffect Radius="10"/>
+                </Border.Effect>
+                <Border.Background>
+                    <VisualBrush Visual="{Binding ElementName=src}" Stretch="None" />
+                </Border.Background>
+            </Border>
+        </Border>
+        <Border x:Name="src" BorderBrush="Black">
+            <StackPanel Orientation="Horizontal">
+            <local:Display x:Name="display" Width="800" MouseDown="display_MouseDown"/>
+                <Border BorderBrush="Black" BorderThickness="2">
+                    <StackPanel>
+                        <Label Margin="0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Background="AliceBlue"
+                               ContentStringFormat="{}Player: {0}" Content="{Binding Player.Name}"/>
+                        <Grid Margin="0" Background="AliceBlue">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="0,2,0,0"/>
+                            <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="0,1,0,0"/>
+                            <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,1,0,2"/>
+                            <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,2,0,0"/>
+                            <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,1,0,0"/>
+                            <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,1,0,2"/>
+                            <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource InfoNameFontStyle}">Score</Label>
+                            <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource InfoNameFontStyle}">Money</Label>
+                            <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="LightSeaGreen"
+                               Content="{Binding Player.Score, NotifyOnTargetUpdated=True}" TargetUpdated="Label_TargetUpdated"/>
+                            <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="Gold" ContentStringFormat="{}{0}$"
+                               Content="{Binding Player.Money}"/>
+                            <Label Grid.Column="0" Grid.Row="2" Style="{StaticResource InfoNameFontStyle}">Health</Label>
+                            <Label Grid.Column="1" Grid.Row="2" Style="{StaticResource InfoValueFontStyle}" Foreground="Pink" ContentStringFormat="{}{0} hp"
+                                   Content="{Binding Player.Health, NotifyOnTargetUpdated=True}" TargetUpdated="Label_TargetUpdated"/>
+                            <!--<Grid Grid.Row="2" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,1,0"/>
+                                <Label Grid.Column="0" Style="{StaticResource InfoNameFontStyle}">Wave</Label>
+                                <Label Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="Pink"
+                               Content="{Binding CurrentWave}"/>
+                            </Grid>-->
+                        </Grid>
+                        <Label Margin="0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Background="PaleGreen">Turrets</Label>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="100"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="0,2,0,0"/>
+                            <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="0,1,0,2"/>
+                            <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,2,1,0"/>
+                            <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,1,1,2"/>
+                            <Button x:Name="btn_machinegun" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                    Command="{Binding MachineGunCommand}" Background="{Binding MachineGunBackground}">
+                                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="100" Width="198">
+                                    <Image Source="Images/tower_1star.png" Height="73"/>
+                                    <Label HorizontalContentAlignment="Center">Machine Gun - 75$</Label>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="btn_lasergun" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                    Command="{Binding LaserGunCommand}" Background="{Binding LaserGunBackground}">
+                                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="100" Width="198">
+                                    <Image Source="Images/tower_2cat.png" Height="73"/>
+                                    <Label HorizontalContentAlignment="Center">Laser Gun - 120$</Label>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="btn_rocketlauncher" Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                    Command="{Binding RocketLauncherCommand}" Background="{Binding RocketLauncherBackground}">
+                                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="100" Width="198">
+                                    <Image Source="Images/tower_3naruto.png" Height="73"/>
+                                    <Label HorizontalContentAlignment="Center">Rocket Launcher - 200$</Label>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="btn_freezergun" Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                    Command="{Binding FreezerGunCommand}" Background="{Binding FreezerGunBackground}">
+                                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="100" Width="198">
+                                    <Image Source="Images/tower_4heart.png" Height="73"/>
+                                    <Label HorizontalContentAlignment="Center">Freezer Gun - 150$</Label>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                        <Label Margin="0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Background="HotPink">Enemies</Label>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="100"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="0,2,0,0"/>
+                            <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="0,1,0,2"/>
+                            <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,2,1,0"/>
+                            <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,1,1,2"/>
+                            <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <StackPanel Height="102" Width="245" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Image Source="Images/enemy_2angryemoji.png" Height="73" Margin="0,6,0,0"/>
+                                    <Label HorizontalContentAlignment="Center" Margin="0,-1,0,0" FontWeight="DemiBold" FontSize="10">
+                                        <Label.Content>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}Emoji - {0} hp - {1} speed - {2} dmg - {3}$">
+                                                        <Binding Path="DefaultEmoji.Health"/>
+                                                        <Binding Path="DefaultEmoji.Speed"/>
+                                                        <Binding Path="DefaultEmoji.Damage"/>
+                                                        <Binding Path="DefaultEmoji.Reward"/>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </Label.Content>
+                                    </Label>
+                                </StackPanel>
+                            </Label>
+                            <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <StackPanel Height="102" Width="235" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Image Source="Images/enemy_3redrabbit.png" Height="73" Margin="0,6,0,0"/>
+                                    <Label HorizontalContentAlignment="Center" Margin="0,-1,0,0" FontWeight="DemiBold" FontSize="10">
+                                        <Label.Content>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}Rabbit - {0} hp - {1} speed - {2} dmg - {3}$">
+                                                        <Binding Path="DefaultRabbit.Health"/>
+                                                        <Binding Path="DefaultRabbit.Speed"/>
+                                                        <Binding Path="DefaultRabbit.Damage"/>
+                                                        <Binding Path="DefaultRabbit.Reward"/>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </Label.Content>
+                                    </Label>
+                                </StackPanel>
+                            </Label>
+                            <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <StackPanel Height="102" Width="252" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Image Source="Images/enemy_5bluewind.png" Height="73" Margin="0,6,0,0"/>
+                                    <Label HorizontalContentAlignment="Center" Margin="0,-1,0,0" FontWeight="DemiBold" FontSize="10">
+                                        <Label.Content>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}BlueWind - {0} hp - {1} speed - {2} dmg - {3}$">
+                                                        <Binding Path="DefaultMan.Health"/>
+                                                        <Binding Path="DefaultMan.Speed"/>
+                                                        <Binding Path="DefaultMan.Damage"/>
+                                                        <Binding Path="DefaultMan.Reward"/>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </Label.Content>
+                                    </Label>
+                                </StackPanel>
+                            </Label>
+                            <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <StackPanel Height="102" Width="234" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Image Source="Images/enemy_1skull.png" Height="73" Margin="0,6,0,0"/>
+                                    <Label HorizontalContentAlignment="Center" Margin="0,-1,0,0" FontWeight="DemiBold" FontSize="10">
+                                        <Label.Content>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}Skull - {0} hp - {1} speed - {2} dmg - {3}$">
+                                                        <Binding Path="DefaultSkull.Health"/>
+                                                        <Binding Path="DefaultSkull.Speed"/>
+                                                        <Binding Path="DefaultSkull.Damage"/>
+                                                        <Binding Path="DefaultSkull.Reward"/>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </Label.Content>
+                                    </Label>
+                                </StackPanel>
+                            </Label>
+                        </Grid>
+                        <Button Margin="12" Padding="10,10,10,10" FontSize="20" Command="{Binding PauseCommand}">Pause</Button>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
+
