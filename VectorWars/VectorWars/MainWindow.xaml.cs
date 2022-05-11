@@ -23,10 +23,10 @@ namespace VectorWars
             DataContext = _viewModel;
             display.SetupModel(_viewModel.Game);
 
-            if(!File.Exists("highscores.txt"))
-            {
-                File.Create("highscores.txt").Close();
-            }
+            //if(!File.Exists("highscores.txt"))
+            //{
+            //    File.Create("highscores.txt").Close();
+            //}
 
         }
 
@@ -65,7 +65,7 @@ namespace VectorWars
             }
             if(_viewModel.Game.Map != null)
             {
-                if(_viewModel.Game.Map.CurrentWave == _viewModel.Game.Map.Waves.Count)
+                if(_viewModel.Game.Map.CurrentWave == 2 && _viewModel.Game.Map.EnemyHandler.Elements.Count == 0)
                 {
                     _viewModel.Game.Stop();
                     var result = MessageBox.Show("Gratulálunk! Nyertél!", "Győzelem!", MessageBoxButton.OK, MessageBoxImage.Warning);

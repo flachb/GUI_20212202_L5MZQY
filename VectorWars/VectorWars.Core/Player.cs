@@ -7,7 +7,6 @@ namespace VectorWars.Core
 {
     public class Player : INotifyPropertyChanged
     {
-        private Map _map;
         private const double ENEMY_REWARD_MODIFIER = 2.4;
         private const double TURRET_REWARD_MODIFIER = 0.8;
         private const int START_HEALTH = 100;

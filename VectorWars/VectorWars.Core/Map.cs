@@ -13,6 +13,8 @@ namespace VectorWars.Core
     {
         private readonly IHandler<IEnemy> _enemyHandler;
 
+        public IHandler<IEnemy> EnemyHandler;
+
         public Grid Grid { get; }
         public Path EnemyPath { get; }
         public SortedList<int, SortedList<TimeSpan, IEnemy>> Waves { get; }
@@ -34,6 +36,7 @@ namespace VectorWars.Core
             SortedList<int, SortedList<TimeSpan, IEnemy>> waves)
         {
             _enemyHandler = enemyHandler;
+            EnemyHandler = enemyHandler;
             Grid = grid;
             EnemyPath = enemyPath;
             Waves = waves;

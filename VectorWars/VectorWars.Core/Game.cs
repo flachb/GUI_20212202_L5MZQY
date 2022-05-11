@@ -149,14 +149,7 @@ namespace VectorWars.Core
 
         private void OnMapFinished()
         {
-            if(_player.Health <= 0)
-            {
-                _ended = 1;
-            }
-            if(_map.CurrentWave == _map.Waves.Count)
-            {
-                _ended = 2;
-            }
+
         }
 
         private void OnEnemyKilled(IEnemy enemy)
