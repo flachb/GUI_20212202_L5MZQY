@@ -30,10 +30,17 @@ namespace VectorWars
         private readonly Brush _selectedBrush;
         private readonly Brush _defaultBrush;
 
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Game Game => _game;
         public Player Player => _game.Player;
+
+        //public int CurrentWave => _currentWave;
+
+        public int CurrentHP => Player.Health;
+
+
         public ICommand PauseCommand { get; }
 
         private ICommand _startCommand;
@@ -126,6 +133,8 @@ namespace VectorWars
             _startCommand = new RelayCommand(ExecuteStartCommand);
             _continueCommand = new RelayCommand(ExecuteContinueCommand);
             StartGameCommand = _startCommand;
+            ExitCommand = new RelayCommand(ExecuteExitCommand);
+            HighScoresCommand = new RelayCommand(ExecuteHighScoreCommand);
 
             _machineGunColor = _defaultBrush;
             _laserGunColor = _defaultBrush;
@@ -137,7 +146,7 @@ namespace VectorWars
             RocketLauncherCommand = new RelayCommand(ExecuteTurretSelectedCommand<RocketLauncherTurret>);
             FreezerGunCommand = new RelayCommand(ExecuteTurretSelectedCommand<FreezerGunTurret>);
 
-            var player = new Player("XANFEST");
+            var player = new Player("Charlie");
             _game = new Game(player);
             _game.MapFinished += () =>
             {
@@ -277,6 +286,17 @@ namespace VectorWars
             }
         }
 
+        private void ExecuteExitCommand()
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
+        private void ExecuteHighScoreCommand()
+        {
+            HighScoreWindow scoreWindow = new HighScoreWindow();
+            scoreWindow.Show();
+        }
+
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -287,5 +307,6 @@ namespace VectorWars
             current = value;
             OnPropertyChanged(propertyName);
         }
+
     }
 }

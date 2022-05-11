@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using VectorWars.Core.Common;
 using VectorWars.Core.Elements;
 using VectorWars.Core.Elements.Types;
@@ -7,7 +9,7 @@ using VectorWars.Core.Handlers;
 
 namespace VectorWars.Core
 {
-    public sealed class Map : IUpdatable
+    public sealed class Map : IUpdatable, INotifyPropertyChanged
     {
         private readonly IHandler<IEnemy> _enemyHandler;
 
@@ -18,9 +20,12 @@ namespace VectorWars.Core
         public event Action Finished;
         public event Action<IEnemy> EnemyReachedFinish;
         public event Action<IEnemy> EnemyKilled;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private TimeSpan _totalElapsed = TimeSpan.Zero;
         private int _currentWaveCounter = 0;
+
+        public int CurrentWave = 0;
 
         internal Map(
             IHandler<IEnemy> enemyHandler,
@@ -69,6 +74,7 @@ namespace VectorWars.Core
             }
 
             _currentWaveCounter++;
+            CurrentWave++;
             if (_currentWaveCounter == Waves.Count)
             {
                 Finished?.Invoke();
@@ -85,6 +91,11 @@ namespace VectorWars.Core
             {
                 EnemyKilled?.Invoke(enemy as IEnemy);
             }
+        }
+
+        private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

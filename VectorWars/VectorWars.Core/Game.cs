@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using VectorWars.Core.Common;
@@ -13,6 +14,7 @@ namespace VectorWars.Core
     public class Game
     {
         private Map _map;
+        public int _ended;
         private readonly Player _player;
         private readonly TurretHandler _turretHandler;
         private readonly ProjectileHandler _projectileHandler;
@@ -53,6 +55,7 @@ namespace VectorWars.Core
             _map.EnemyReachedFinish += OnEnemyReachedFinish;
             _map.EnemyKilled += OnEnemyKilled;
             _map.Finished += OnMapFinished;
+            _player.ZeroHealth += OnMapFinished;
         }
 
         public void Start()
@@ -146,7 +149,14 @@ namespace VectorWars.Core
 
         private void OnMapFinished()
         {
-            MapFinished?.Invoke();
+            if(_player.Health <= 0)
+            {
+                _ended = 1;
+            }
+            if(_map.CurrentWave == _map.Waves.Count)
+            {
+                _ended = 2;
+            }
         }
 
         private void OnEnemyKilled(IEnemy enemy)

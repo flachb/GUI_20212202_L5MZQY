@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using VectorWars.Core.Elements.Types;
 
@@ -6,10 +7,13 @@ namespace VectorWars.Core
 {
     public class Player : INotifyPropertyChanged
     {
+        private Map _map;
         private const double ENEMY_REWARD_MODIFIER = 2.4;
         private const double TURRET_REWARD_MODIFIER = 0.8;
         private const int START_HEALTH = 100;
         private const int START_MONEY = 100;
+
+        public event Action ZeroHealth;
 
         public string Name { get; }
 
@@ -65,6 +69,8 @@ namespace VectorWars.Core
         public void EnemyReachedBase(IEnemy enemy)
         {
             Health -= enemy.Damage;
+            if (Health <= 0)
+                ZeroHealth?.Invoke();
         }
 
         public void BoughtTurret(ITurret turret)

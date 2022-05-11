@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VectorWars"
         mc:Ignorable="d" x:Name="window"
-        Title="MainWindow" Height="800" Width="1305" ResizeMode="NoResize" Loaded="Window_Loaded" KeyDown="Window_KeyDown" MouseMove="Window_MouseMove">
+        Title="VectorWars TD" Height="800" Width="1305" ResizeMode="NoResize" Loaded="Window_Loaded" KeyDown="Window_KeyDown" MouseMove="Window_MouseMove">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -14,7 +14,7 @@
             <StackPanel Width="200" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Content="{Binding StartGameButtonContent}" Command="{Binding StartGameCommand}" Height="50" FontSize="20" Margin="10"/>
                 <CheckBox Content="Hard mode" IsChecked="{Binding HardModeChecked}" Visibility="{Binding IsHardModeVisible}" Margin="10, 0, 10, 10" HorizontalAlignment="Center"/>
-                <Button Content="High scores" Command="{Binding HighScoresCommand}" Height="50" FontSize="20" Margin="10"/>
+                <!--<Button Content="High scores" Command="{Binding HighScoresCommand}" Height="50" FontSize="20" Margin="10"/>-->
                 <Button Content="Exit" Command="{Binding ExitCommand}" Height="50" FontSize="20" Margin="10"/>
             </StackPanel>
         </Border>
@@ -54,13 +54,30 @@
                             <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,1,0,2"/>
                             <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource InfoNameFontStyle}">Score</Label>
                             <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource InfoNameFontStyle}">Money</Label>
-                            <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource InfoNameFontStyle}">Health</Label>
                             <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="LightSeaGreen"
-                               Content="{Binding Player.Score}"/>
+                               Content="{Binding Player.Score, NotifyOnTargetUpdated=True}" TargetUpdated="Label_TargetUpdated"/>
                             <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="Gold" ContentStringFormat="{}{0}$"
                                Content="{Binding Player.Money}"/>
-                            <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="Pink" ContentStringFormat="{}{0} hp"
-                               Content="{Binding Player.Health}"/>
+                            <Grid Grid.Row="2" Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,1,0"/>
+                                <Label Grid.Column="0" Style="{StaticResource InfoNameFontStyle}">Health</Label>
+                                <Label Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="Pink" ContentStringFormat="{}{0} hp"
+                               Content="{Binding Player.Health, NotifyOnTargetUpdated=True}" TargetUpdated="Label_TargetUpdated"/>
+                            </Grid>
+                            <Grid Grid.Row="2" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,1,0"/>
+                                <Label Grid.Column="0" Style="{StaticResource InfoNameFontStyle}">Wave</Label>
+                                <Label Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="Pink"
+                               Content="{Binding CurrentWave}"/>
+                            </Grid>
                         </Grid>
                         <Label Margin="0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Background="PaleGreen">Turrets</Label>
                         <Grid>
