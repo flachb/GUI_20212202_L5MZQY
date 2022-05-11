@@ -1,0 +1,11 @@
+C:\Users\hopel\source\repos\GUI_20212202_L5MZQY\VectorWars\VectorWars.Core\bin\Debug\net5.0\VectorWars.Core.deps.json
+C:\Users\hopel\source\repos\GUI_20212202_L5MZQY\VectorWars\VectorWars.Core\bin\Debug\net5.0\VectorWars.Core.dll
+C:\Users\hopel\source\repos\GUI_20212202_L5MZQY\VectorWars\VectorWars.Core\bin\Debug\net5.0\ref\VectorWars.Core.dll
+C:\Users\hopel\source\repos\GUI_20212202_L5MZQY\VectorWars\VectorWars.Core\bin\Debug\net5.0\VectorWars.Core.pdb
+C:\Users\hopel\source\repos\GUI_20212202_L5MZQY\VectorWars\VectorWars.Core\obj\Debug\net5.0\VectorWars.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hopel\source\repos\GUI_20212202_L5MZQY\VectorWars\VectorWars.Core\obj\Debug\net5.0\VectorWars.Core.AssemblyInfoInputs.cache
+C:\Users\hopel\source\repos\GUI_20212202_L5MZQY\VectorWars\VectorWars.Core\obj\Debug\net5.0\VectorWars.Core.AssemblyInfo.cs
+C:\Users\hopel\source\repos\GUI_20212202_L5MZQY\VectorWars\VectorWars.Core\obj\Debug\net5.0\VectorWars.Core.csproj.CoreCompileInputs.cache
+C:\Users\hopel\source\repos\GUI_20212202_L5MZQY\VectorWars\VectorWars.Core\obj\Debug\net5.0\VectorWars.Core.dll
+C:\Users\hopel\source\repos\GUI_20212202_L5MZQY\VectorWars\VectorWars.Core\obj\Debug\net5.0\ref\VectorWars.Core.dll
+C:\Users\hopel\source\repos\GUI_20212202_L5MZQY\VectorWars\VectorWars.Core\obj\Debug\net5.0\VectorWars.Core.pdb
