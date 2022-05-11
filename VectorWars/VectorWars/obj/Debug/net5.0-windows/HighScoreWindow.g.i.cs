@@ -53,7 +53,7 @@ namespace VectorWars {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/VectorWars;component/highscorewindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/VectorWars;V1.0.0.0;component/highscorewindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\HighScoreWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

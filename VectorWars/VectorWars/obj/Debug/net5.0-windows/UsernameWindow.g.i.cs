@@ -61,7 +61,7 @@ namespace VectorWars {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/VectorWars;component/usernamewindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/VectorWars;V1.0.0.0;component/usernamewindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\UsernameWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
