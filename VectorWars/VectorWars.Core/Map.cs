@@ -20,10 +20,9 @@ namespace VectorWars.Core
         public event Action<IEnemy> EnemyKilled;
 
         private TimeSpan _totalElapsed = TimeSpan.Zero;
-        private TimeSpan _previousElapsed = TimeSpan.Zero;
         private int _currentWaveCounter = 0;
 
-        public Map(
+        internal Map(
             IHandler<IEnemy> enemyHandler,
             Grid grid,
             Path enemyPath,
@@ -37,26 +36,35 @@ namespace VectorWars.Core
 
         public void Tick(TimeSpan elapsed)
         {
-            _previousElapsed = _totalElapsed;
+            if (_currentWaveCounter >= Waves.Count)
+                return;
+
             _totalElapsed += elapsed;
 
             var currentWave = Waves[_currentWaveCounter];
+            var spawnsToRemove = new List<TimeSpan>();
 
-            foreach ((TimeSpan spawnTime, IEnemy enemy) in currentWave)
+            try
             {
-                if (spawnTime <= _previousElapsed)
-                { 
-                    continue; 
-                }
-
-                if (spawnTime <= _totalElapsed)
+                foreach ((TimeSpan spawnTime, IEnemy enemy) in currentWave)
                 {
-                    enemy.Destroyed += OnEnemyDestroyed;
-                    _enemyHandler.Add(enemy);
+                    if (spawnTime <= _totalElapsed)
+                    {
+                        enemy.Destroyed += OnEnemyDestroyed;
+                        _enemyHandler.Add(enemy);
+                        spawnsToRemove.Add(spawnTime);
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
-                else
+            }
+            finally
+            {
+                foreach (var spawn in spawnsToRemove)
                 {
-                    return;
+                    currentWave.Remove(spawn);
                 }
             }
 

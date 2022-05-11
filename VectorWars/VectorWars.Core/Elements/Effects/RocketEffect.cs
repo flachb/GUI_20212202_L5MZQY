@@ -15,11 +15,11 @@ namespace VectorWars.Core.Elements.Effects
 
         public override TimeSpan Lifespan => TimeSpan.Zero;
 
-        public override int Damage => 20; //dummy
+        public override int Damage => 200; //dummy
 
         public override float SpeedModifier => 0f;
 
-        public override float Radius => 40f; //dummy
+        public override float Radius => 30f; //dummy
 
     }
 }

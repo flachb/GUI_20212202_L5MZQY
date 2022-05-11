@@ -13,10 +13,11 @@ namespace VectorWars.Core.Elements.Projectiles
 {
     public class RocketProjectile : ProjectileBase
     {
-        public RocketProjectile(IHandler<IEffect> effectHandler, IEffectFactory effectFactory, Point position, IMapElement target) : base(effectHandler, effectFactory, position, target)
+        public RocketProjectile(IHandler<IEffect> effectHandler, IEffectFactory effectFactory, Point position, IMapElement target) 
+            : base(effectHandler, effectFactory, position, new PointOnMap(target))
         {
         }
-        public override float Speed => 100f; //dummy
-        public override float Radius => throw new NotImplementedException();
+        public override float Speed => 200f; //dummy
+        public override float Radius => 30f;
     }
 }

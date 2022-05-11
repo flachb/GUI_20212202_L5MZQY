@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Logic\**" />
+    <EmbeddedResource Remove="Logic\**" />
+    <None Remove="Logic\**" />
+    <Page Remove="Logic\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\backyard_blueyellow.png" />
     <None Remove="Images\backyard_green.png" />
     <None Remove="Images\enemy_1skull.png" />
@@ -24,34 +31,45 @@
     <None Remove="Images\tower_2cat.png" />
     <None Remove="Images\tower_3naruto.png" />
     <None Remove="Images\tower_4heart.png" />
+    <None Remove="Levels\easy.lvl" />
+    <None Remove="Levels\hard.lvl" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\VectorWars.Core\VectorWars.Core.csproj" />
   </ItemGroup>
+	
+	<ItemGroup>
+		<Resource Include="Images\backyard_blueyellow.png" />
+		<Resource Include="Images\backyard_green.png" />
+		<Resource Include="Images\enemy_1skull.png" />
+		<Resource Include="Images\enemy_2angryemoji.png" />
+		<Resource Include="Images\enemy_3redrabbit.png" />
+		<Resource Include="Images\enemy_4man.png" />
+		<Resource Include="Images\enemy_5bluewind.png" />
+		<Resource Include="Images\route.png" />
+		<Resource Include="Images\shoot_1red.png" />
+		<Resource Include="Images\shoot_2blue.png" />
+		<Resource Include="Images\shoot_3purple.png" />
+		<Resource Include="Images\shoot_4brown.png" />
+		<Resource Include="Images\shoot_5green.png" />
+		<Resource Include="Images\tower_1star.png" />
+		<Resource Include="Images\tower_2cat.png" />
+		<Resource Include="Images\tower_3naruto.png" />
+		<Resource Include="Images\tower_4heart.png" />
+	</ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Logic\" />
+    <EmbeddedResource Include="Levels\easy.lvl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Levels\hard.lvl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\backyard_blueyellow.png" />
-    <Resource Include="Images\backyard_green.png" />
-    <Resource Include="Images\enemy_1skull.png" />
-    <Resource Include="Images\enemy_2angryemoji.png" />
-    <Resource Include="Images\enemy_3redrabbit.png" />
-    <Resource Include="Images\enemy_4man.png" />
-    <Resource Include="Images\enemy_5bluewind.png" />
-    <Resource Include="Images\route.png" />
-    <Resource Include="Images\shoot_1red.png" />
-    <Resource Include="Images\shoot_2blue.png" />
-    <Resource Include="Images\shoot_3purple.png" />
-    <Resource Include="Images\shoot_4brown.png" />
-    <Resource Include="Images\shoot_5green.png" />
-    <Resource Include="Images\tower_1star.png" />
-    <Resource Include="Images\tower_2cat.png" />
-    <Resource Include="Images\tower_3naruto.png" />
-    <Resource Include="Images\tower_4heart.png" />
+    <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
   </ItemGroup>
 
 </Project>

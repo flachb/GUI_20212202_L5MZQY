@@ -19,7 +19,9 @@ namespace VectorWars.Core.Elements.Turrets
 
         public override int SellPrice => 110;
 
-        public override float Radius => 120f;
+        public override float Radius => 50f;
+
+        public override float Range => 200f;
 
         public RocketLauncherTurret(IEnemyFinder enemyFinder, IHandler<IProjectile> projectileHandler, IProjectileFactory projectileFactory, Point position) : base(enemyFinder, projectileHandler, projectileFactory, position)
         { 

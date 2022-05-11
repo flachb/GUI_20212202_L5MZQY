@@ -12,26 +12,29 @@ namespace VectorWars.Core
 {
     public class Game
     {
-        public readonly Map _map;
-        public readonly Player _player;
+        private Map _map;
+        private readonly Player _player;
         private readonly TurretHandler _turretHandler;
         private readonly ProjectileHandler _projectileHandler;
         private readonly EffectHandler _effectHandler;
         private readonly EnemyHandler _enemyHandler;
         private readonly Factory _turretFactory;
+        private readonly MapBuilder _mapBuilder;
 
         private CancellationTokenSource _cancellationTokenSource;
         private Task _loopTask;
 
         public Map Map => _map;
+        public MapBuilder MapBuilder => _mapBuilder;
         public Player Player => _player;
+
+        public bool IsRunning => !_loopTask?.IsCompleted ?? false;
 
         public event Action<IEnumerable<IMapElement>> Render;
         public event Action MapFinished;
 
-        public Game(Map map, Player player)
+        public Game(Player player)
         {
-            _map = map;
             _player = player;
 
             _turretHandler = new TurretHandler();
@@ -40,6 +43,12 @@ namespace VectorWars.Core
             _enemyHandler = new EnemyHandler();
 
             _turretFactory = new Factory(_enemyHandler, _effectHandler, _projectileHandler);
+            _mapBuilder = new MapBuilder(_enemyHandler);
+        }
+
+        public void SetupMap(Map map)
+        {
+            _map = map;
 
             _map.EnemyReachedFinish += OnEnemyReachedFinish;
             _map.EnemyKilled += OnEnemyKilled;
@@ -48,7 +57,7 @@ namespace VectorWars.Core
 
         public void Start()
         {
-            if (_loopTask?.IsCompleted ?? false)
+            if (!_loopTask?.IsCompleted ?? false)
             {
                 return;
             }
@@ -75,6 +84,9 @@ namespace VectorWars.Core
 
             var turret = _turretFactory.CreateTurret<TTurret, TProjectile, TEffect>(gridElement.Center);
 
+            if (_player.Money < turret.BuyPrice)
+                return;
+
             gridElement.OccupiedBy = turret;
 
             _turretHandler.Add(turret);
@@ -90,30 +102,10 @@ namespace VectorWars.Core
 
             _turretHandler.Remove(turret);
             _player.SoldTurret(turret);
+            gridElement.OccupiedBy = null;
         }
 
-        private Task StartLoop(CancellationToken cancellation)
-        {
-            return Task.Run(() =>
-            {
-                var startTime = DateTime.Now;
-
-                while (!cancellation.IsCancellationRequested)
-                {
-                    var elapsedTime = DateTime.Now - startTime;
-
-                    _map.Tick(elapsedTime);
-                    _turretHandler.Tick(elapsedTime);
-                    _projectileHandler.Tick(elapsedTime);
-                    _effectHandler.Tick(elapsedTime);
-                    _enemyHandler.Tick(elapsedTime);
-
-                    Render?.Invoke(GetMapElements());
-                }
-            });
-        }
-
-        public IEnumerable<IMapElement> GetMapElements()
+        private IEnumerable<IMapElement> GetMapElements()
         {
             foreach (var mapElement in _turretHandler.Elements)
                 yield return mapElement;
@@ -126,6 +118,30 @@ namespace VectorWars.Core
 
             foreach (var mapElement in _enemyHandler.Elements)
                 yield return mapElement;
+        }
+
+        private Task StartLoop(CancellationToken cancellation)
+        {
+            return Task.Run(async () =>
+            {
+                var startTime = DateTime.Now;
+                var previousElapsed = startTime;
+
+                while (!cancellation.IsCancellationRequested)
+                {
+                    var elapsedTime = DateTime.Now - previousElapsed;
+                    previousElapsed += elapsedTime;
+
+                    _map.Tick(elapsedTime);
+                    _turretHandler.Tick(elapsedTime);
+                    _projectileHandler.Tick(elapsedTime);
+                    _effectHandler.Tick(elapsedTime);
+                    _enemyHandler.Tick(elapsedTime);
+
+                    Render?.Invoke(GetMapElements());
+                    await Task.Delay(40);
+                }
+            });
         }
 
         private void OnMapFinished()

@@ -26,6 +26,7 @@ namespace VectorWars.Core.Elements.Bases
         public EffectBase(IEnemyFinder enemyFinder, Point position)
         {
             _enemyFinder = enemyFinder;
+            _currentLifespan = Lifespan;
 
             Position = position;
         }
@@ -39,12 +40,12 @@ namespace VectorWars.Core.Elements.Bases
                 return;
 
             var effectedEnemies = _enemyFinder.GetEnemies(Position, Radius);
-            if (!effectedEnemies.Any())
-                return;
-
-            foreach (var enemy in effectedEnemies)
+            if (effectedEnemies.Any())
             {
-                enemy.AddEffect(this);
+                foreach (var enemy in effectedEnemies)
+                {
+                    enemy.AddEffect(this);
+                }
             }
 
             if (_currentLifespan < TimeSpan.Zero)

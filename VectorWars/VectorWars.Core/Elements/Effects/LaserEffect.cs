@@ -5,9 +5,9 @@ using VectorWars.Core.Handlers;
 
 namespace VectorWars.Core.Elements.Effects
 {
-    public class LaserEffects : EffectBase
+    public class LaserEffect : EffectBase
     {
-        public LaserEffects(IEnemyFinder enemyFinder, Point position) : base(enemyFinder, position)
+        public LaserEffect(IEnemyFinder enemyFinder, Point position) : base(enemyFinder, position)
         {
         }
 
@@ -15,7 +15,7 @@ namespace VectorWars.Core.Elements.Effects
 
         public override TimeSpan Lifespan => TimeSpan.Zero;
 
-        public override int Damage => 10; //dummy
+        public override int Damage => 80; //dummy
 
         public override float SpeedModifier => 0f;
 

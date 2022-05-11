@@ -16,8 +16,8 @@ namespace VectorWars.Core.Elements.Projectiles
         public BulletProjectile(IHandler<IEffect> effectHandler, IEffectFactory effectFactory, Point position, IMapElement target) : base(effectHandler, effectFactory, position, target)
         {
         }
-        public override float Speed => 100f; //dummy
-        public override float Radius => 5f;
+        public override float Speed => 300f; //dummy
+        public override float Radius => 20f;
 
     }
 }

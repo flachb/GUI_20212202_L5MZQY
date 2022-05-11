@@ -29,7 +29,8 @@ namespace VectorWars.Core.Elements.Bases
             _pathTargetPoint = 0;
             _originalSpeed = Speed;
 
-            Position = _path[_pathTargetPoint];
+            if (_path.Count > 0)
+                Position = _path[_pathTargetPoint];
         }
 
         public void AddEffect(IEffect effect)
@@ -39,7 +40,7 @@ namespace VectorWars.Core.Elements.Bases
 
         public void Tick(TimeSpan elapsed)
         {
-            if(Point.Distance(Position, _path[_pathTargetPoint]) <= Radius)
+            if(Point.Distance(Position, _path[_pathTargetPoint]) <= Radius / 4)
             {
                 ++_pathTargetPoint;
 
@@ -79,7 +80,7 @@ namespace VectorWars.Core.Elements.Bases
             foreach (var effect in _appliedEffects)
             {
                 Health -= effect.Damage;
-                Speed *= (1 - effect.SpeedModifier);
+                Speed *= (effect.SpeedModifier);
             }
 
             _appliedEffects.Clear();

@@ -19,6 +19,7 @@ namespace VectorWars.Core.Elements.Bases
         public Point Position { get; init; }
         public Vector Rotation { get; private set; }
         public abstract float Radius { get; }
+        public abstract float Range { get; }
 
         public event Action<IMapElement> Destroyed;
 
@@ -50,7 +51,7 @@ namespace VectorWars.Core.Elements.Bases
             if (_currentCooldown > TimeSpan.Zero)
                 return;
 
-            var enemiesInRange = _enemyFinder.GetEnemies(Position, Radius);
+            var enemiesInRange = _enemyFinder.GetEnemies(Position, Range);
             if (!enemiesInRange.Any())
                 return;
 

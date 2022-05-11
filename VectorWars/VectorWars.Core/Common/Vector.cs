@@ -72,5 +72,13 @@ namespace VectorWars.Core.Common
 
         public static Vector operator /(Vector a, float b)
             => new Vector(a.X / b, a.Y / b);
+
+        public static double AngleBetween(Vector a, Vector b)
+        {
+            double sin = a.X * b.Y - b.X * a.Y;
+            double cos = a.X * b.X + a.Y * b.Y;
+
+            return Math.Atan2(sin, cos) * (180 / Math.PI);
+        }
     }
 }

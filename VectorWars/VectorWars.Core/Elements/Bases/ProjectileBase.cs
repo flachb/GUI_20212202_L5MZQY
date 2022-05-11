@@ -40,7 +40,7 @@ namespace VectorWars.Core.Elements.Bases
 
             var movement = direction * Speed * (float)elapsed.TotalSeconds;
 
-            if (movement.Magnitude + Radius + Target.Radius >= distance.Magnitude)
+            if (movement.Magnitude + Radius / 8 + Target.Radius / 8 >= distance.Magnitude)
             {
                 OnDestroyed();
                 var effect = _effectFactory.Create(Target.Position);

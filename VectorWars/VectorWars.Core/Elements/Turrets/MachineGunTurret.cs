@@ -13,13 +13,15 @@ namespace VectorWars.Core.Elements.Turrets
 {
     public class MachineGunTurret : TurretBase
     {
-        public override TimeSpan Cooldown => TimeSpan.FromSeconds(0.5);
+        public override TimeSpan Cooldown => TimeSpan.FromSeconds(0.2);
 
         public override int BuyPrice => 75;
 
         public override int SellPrice => 45;
 
-        public override float Radius => 60f;
+        public override float Radius => 40f;
+
+        public override float Range => 300f;
 
         public MachineGunTurret(IEnemyFinder enemyFinder, IHandler<IProjectile> projectileHandler, IProjectileFactory projectileFactory, Point position) : base(enemyFinder, projectileHandler, projectileFactory, position)
         {

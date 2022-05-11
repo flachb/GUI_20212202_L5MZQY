@@ -7,6 +7,8 @@ namespace VectorWars.Core.Common
     {
         private readonly List<Point> _points;
 
+        public static Path Emtpy => new Path();
+
         public Path(params Point[] points)
         {
             _points = new List<Point>(points);
