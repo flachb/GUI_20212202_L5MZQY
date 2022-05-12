@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VectorWars"
         mc:Ignorable="d"
-        Title="HighScoreWindow" Height="450" Width="300">
+        Title="HighScores" Height="450" Width="300">
     <Window.DataContext>
         <local:HighScoreWindowViewModel/>
     </Window.DataContext>
@@ -14,8 +14,34 @@
             <RowDefinition Height="15*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <ListBox Grid.Row="0" ItemsSource="{Binding _players}">
-            
+        <ListBox Grid.Row="0" ItemsSource="{Binding _orderedPlayers}" HorizontalContentAlignment="Stretch">
+            <ListBox.Template>
+                <ControlTemplate>
+                    <DockPanel LastChildFill="True">
+                        <Grid DockPanel.Dock="Top" Height="30" Background="LightGray">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" HorizontalContentAlignment="Center">Name</Label>
+                            <Label Grid.Column="1" HorizontalContentAlignment="Center">Highest Score</Label>
+                        </Grid>
+                        <ItemsPresenter></ItemsPresenter>
+                    </DockPanel>
+                </ControlTemplate>
+            </ListBox.Template>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" HorizontalContentAlignment="Center" Content="{Binding Name}"/>
+                        <Label Grid.Column="1" HorizontalContentAlignment="Center" Content="{Binding Score}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
         <Button Grid.Row="1" Margin="10" Click="Button_Click">Vissza</Button>
     </Grid>

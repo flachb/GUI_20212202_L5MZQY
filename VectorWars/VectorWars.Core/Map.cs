@@ -27,7 +27,16 @@ namespace VectorWars.Core
         private TimeSpan _totalElapsed = TimeSpan.Zero;
         private int _currentWaveCounter = 0;
 
-        public int CurrentWave = 0;
+        private int _currentWave;
+
+        public int CurrentWave
+        {
+            get { return _currentWave; }
+            set { _currentWave = value;
+                OnNotifyPropertyChanged();
+            }
+        }
+
 
         internal Map(
             IHandler<IEnemy> enemyHandler,

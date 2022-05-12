@@ -14,7 +14,16 @@ namespace VectorWars.Core
 
         public event Action ZeroHealth;
 
-        public string Name { get; }
+        private string _name;
+
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value;
+                OnNotifyPropertyChanged();
+            }
+        }
+
 
         private int _health;
         public int Health

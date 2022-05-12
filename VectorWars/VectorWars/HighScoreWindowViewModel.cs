@@ -30,21 +30,24 @@ namespace VectorWars
     }
     public class HighScoreWindowViewModel
     {
-        public IList<Players> _players { get; set; }
+        private IList<Players> _players { get; set; }
+        public IOrderedEnumerable<Players> _orderedPlayers { get; set; }
 
         public HighScoreWindowViewModel()
         {
+            _players = new List<Players>();
             if(!IsInDesignMode)
             {
                 string[] line = new string[2];
                 StreamReader reader = new StreamReader("highscores.txt");
                 while (!reader.EndOfStream)
                 {
-                    line = reader.ReadLine().Split(':');
+                    line = reader.ReadLine().Split(';');
                     _players.Add(new Players() { Name = line[0], Score = Convert.ToInt32(line[1]) });
                 };
                 reader.Close();
             }
+            _orderedPlayers = _players.OrderByDescending(a => a.Score);
         }
 
         static bool IsInDesignMode

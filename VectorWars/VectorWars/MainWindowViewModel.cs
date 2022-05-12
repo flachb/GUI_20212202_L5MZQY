@@ -36,9 +36,9 @@ namespace VectorWars
         public Game Game => _game;
         public Player Player => _game.Player;
 
-        //public int CurrentWave => _currentWave;
-
         public int CurrentHP => Player.Health;
+
+        public string username;
 
 
         public ICommand PauseCommand { get; }
@@ -68,6 +68,13 @@ namespace VectorWars
         {
             get => _isHardModeVisible;
             set => SetValue(ref _isHardModeVisible, value);
+        }
+
+        private bool _isUsernameEnabled = true;
+        public bool IsUsernameEnabled
+        {
+            get => _isUsernameEnabled;
+            set => SetValue(ref _isUsernameEnabled, value);
         }
 
         private bool _hardModeChecked = false;
@@ -146,7 +153,7 @@ namespace VectorWars
             RocketLauncherCommand = new RelayCommand(ExecuteTurretSelectedCommand<RocketLauncherTurret>);
             FreezerGunCommand = new RelayCommand(ExecuteTurretSelectedCommand<FreezerGunTurret>);
 
-            var player = new Player("Charlie");
+            var player = new Player("XYZPlayer");
             _game = new Game(player);
             _game.MapFinished += () =>
             {
@@ -227,6 +234,11 @@ namespace VectorWars
             var map = _game.MapBuilder.Build(level);
                 _game.SetupMap(map);
 
+            if(username != null)
+            {
+                Player.Name = username;
+            }
+
             IsMenuVisible = Visibility.Collapsed;
             _game.Start();
 
@@ -247,6 +259,8 @@ namespace VectorWars
                 StartGameButtonContent = "Continue";
                 IsHardModeVisible = Visibility.Collapsed;
                 IsMenuVisible = Visibility.Visible;
+                IsUsernameEnabled = false;
+                
                 _game.Stop();
             }
             else

@@ -13,8 +13,9 @@
         <Border Panel.ZIndex="2" Visibility="{Binding IsMenuVisible, FallbackValue=Collapsed}">
             <StackPanel Width="200" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Content="{Binding StartGameButtonContent}" Command="{Binding StartGameCommand}" Height="50" FontSize="20" Margin="10"/>
+                <TextBox x:Name="tb_username" Height="40" FontSize="18" Margin="10" IsEnabled="{Binding IsUsernameEnabled, FallbackValue=False}" TextChanged="tb_username_TextChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <CheckBox Content="Hard mode" IsChecked="{Binding HardModeChecked}" Visibility="{Binding IsHardModeVisible}" Margin="10, 0, 10, 10" HorizontalAlignment="Center"/>
-                <!--<Button Content="High scores" Command="{Binding HighScoresCommand}" Height="50" FontSize="20" Margin="10"/>-->
+                <Button Content="High scores" Command="{Binding HighScoresCommand}" Height="50" FontSize="20" Margin="10"/>
                 <Button Content="Exit" Command="{Binding ExitCommand}" Height="50" FontSize="20" Margin="10"/>
             </StackPanel>
         </Border>
@@ -58,19 +59,26 @@
                                Content="{Binding Player.Score, NotifyOnTargetUpdated=True}" TargetUpdated="Label_TargetUpdated"/>
                             <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="Gold" ContentStringFormat="{}{0}$"
                                Content="{Binding Player.Money}"/>
-                            <Label Grid.Column="0" Grid.Row="2" Style="{StaticResource InfoNameFontStyle}">Health</Label>
-                            <Label Grid.Column="1" Grid.Row="2" Style="{StaticResource InfoValueFontStyle}" Foreground="Pink" ContentStringFormat="{}{0} hp"
+                            <Grid Grid.Row="2" Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,1,0"/>
+                                <Label Grid.Column="0" Grid.Row="2" Style="{StaticResource InfoNameFontStyle}">Health
+                                    </Label>
+                                    <Label Grid.Column="1" Grid.Row="2" Style="{StaticResource InfoValueFontStyle}" Foreground="Pink" ContentStringFormat="{}{0} hp"
                                    Content="{Binding Player.Health, NotifyOnTargetUpdated=True}" TargetUpdated="Label_TargetUpdated"/>
-                            <!--<Grid Grid.Row="2" Grid.Column="1">
+                            </Grid>
+                            <Grid Grid.Row="2" Grid.Column="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
                                 <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,1,0"/>
                                 <Label Grid.Column="0" Style="{StaticResource InfoNameFontStyle}">Wave</Label>
-                                <Label Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="Pink"
-                               Content="{Binding CurrentWave}"/>
-                            </Grid>-->
+                                <Label Grid.Column="1" Style="{StaticResource InfoValueFontStyle}" Foreground="Red" x:Name="label_cw" ContentStringFormat="Round {0}"/>
+                            </Grid>
                         </Grid>
                         <Label Margin="0" HorizontalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Background="PaleGreen">Turrets</Label>
                         <Grid>
